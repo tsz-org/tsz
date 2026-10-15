@@ -944,7 +944,7 @@ impl<'a> Printer<'a> {
         None
     }
 
-    fn skip_interface_quoted_source_text(&self, quote_start: usize) -> usize {
+    const fn skip_interface_quoted_source_text(&self, quote_start: usize) -> usize {
         let Some(text) = self.source_text else {
             return quote_start + 1;
         };

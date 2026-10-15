@@ -303,7 +303,7 @@ impl<'a> DocumentHighlightProvider<'a> {
     }
 
     /// Skip whitespace forward from an offset and return the new offset.
-    fn skip_whitespace_forward(&self, offset: usize) -> usize {
+    const fn skip_whitespace_forward(&self, offset: usize) -> usize {
         tsz_common::text_scan::skip_ascii_whitespace(self.source_text.as_bytes(), offset)
     }
 

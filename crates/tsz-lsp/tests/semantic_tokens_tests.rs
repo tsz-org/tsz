@@ -21,7 +21,7 @@ fn decode_tokens(data: &[u32]) -> Vec<(u32, u32, u32, u32, u32)> {
     let mut result = Vec::new();
     let mut line = 0u32;
     let mut col = 0u32;
-    for chunk in data.chunks_exact(5) {
+    for chunk in data.as_chunks::<5>().0 {
         let delta_line = chunk[0];
         let delta_col = chunk[1];
         let length = chunk[2];

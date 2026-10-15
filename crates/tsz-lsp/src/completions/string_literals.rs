@@ -240,7 +240,7 @@ impl<'a> Completions<'a> {
         self.collect_string_constraint_labels_for_callee(callee_symbol, arg_index, labels);
     }
 
-    fn count_top_level_commas(&self, start: usize, end: usize) -> usize {
+    const fn count_top_level_commas(&self, start: usize, end: usize) -> usize {
         if start >= end || end > self.source_text.len() {
             return 0;
         }

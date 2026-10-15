@@ -189,7 +189,7 @@ impl ParserState {
                 count
             }
 
-            fn scan_digits(body: &[u8], end: usize, pos: &mut usize) -> usize {
+            const fn scan_digits(body: &[u8], end: usize, pos: &mut usize) -> usize {
                 let start = *pos;
                 while *pos < end && body[*pos].is_ascii_digit() {
                     *pos += 1;
@@ -669,7 +669,7 @@ impl ParserState {
                     negated: property_negated,
                 } = mode;
 
-                fn scan_word(body: &[u8], end: usize, pos: &mut usize) -> usize {
+                const fn scan_word(body: &[u8], end: usize, pos: &mut usize) -> usize {
                     let start = *pos;
                     while *pos < end && (body[*pos] == b'_' || body[*pos].is_ascii_alphanumeric()) {
                         *pos += 1;
@@ -1141,7 +1141,7 @@ impl ParserState {
             where
                 F: Fn(&mut ParserState, usize, u32, &str, u32),
             {
-                fn is_class_set_operator_at(body: &[u8], pos: usize, end: usize) -> bool {
+                const fn is_class_set_operator_at(body: &[u8], pos: usize, end: usize) -> bool {
                     pos + 1 < end
                         && ((body[pos] == b'&' && body[pos + 1] == b'&')
                             || (body[pos] == b'-' && body[pos + 1] == b'-'))
@@ -1160,7 +1160,7 @@ impl ParserState {
 
                 /// Classify the operator at `pos`, which the caller has already
                 /// confirmed with `is_class_set_operator_at`.
-                fn class_set_operator_kind(body: &[u8], pos: usize) -> ClassSetKind {
+                const fn class_set_operator_kind(body: &[u8], pos: usize) -> ClassSetKind {
                     if body[pos] == b'-' {
                         ClassSetKind::Subtraction
                     } else {

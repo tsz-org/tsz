@@ -417,15 +417,15 @@ impl<'a> CodeActionProvider<'a> {
             .position_to_offset(range.end, self.source)
             .unwrap_or(start_offset);
 
-        let mut try_offset = |offset: u32| {
+        let try_offset = |offset: u32| {
             let node_idx = find_node_at_offset(self.arena, offset);
             let node = self.arena.get(node_idx)?;
             (node.kind == SyntaxKind::Identifier as u16).then_some(node_idx)
         };
 
         try_offset(start_offset)
-            .or_else(|| end_offset.checked_sub(1).and_then(&mut try_offset))
-            .or_else(|| start_offset.checked_sub(1).and_then(&mut try_offset))
+            .or_else(|| end_offset.checked_sub(1).and_then(try_offset))
+            .or_else(|| start_offset.checked_sub(1).and_then(try_offset))
     }
 
     fn missing_name_from_diag(&self, diag: &LspDiagnostic) -> Option<String> {

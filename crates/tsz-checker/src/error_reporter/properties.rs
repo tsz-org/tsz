@@ -1208,7 +1208,7 @@ impl<'a> CheckerState<'a> {
                         c,
                     ) == Some(name)
                 };
-                if constraint.is_some_and(&is_self_ref) {
+                if constraint.is_some_and(is_self_ref) {
                     return;
                 }
                 let name_str = self.ctx.types.resolve_atom(name);

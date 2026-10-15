@@ -662,7 +662,7 @@ fn starts_with_directive(
     source_byte_at_word_boundary(bytes, directive_end, line_end)
 }
 
-fn source_byte_at_word_boundary(bytes: &[u8], pos: usize, line_end: usize) -> bool {
+const fn source_byte_at_word_boundary(bytes: &[u8], pos: usize, line_end: usize) -> bool {
     pos >= line_end || !is_directive_word_byte(bytes[pos])
 }
 

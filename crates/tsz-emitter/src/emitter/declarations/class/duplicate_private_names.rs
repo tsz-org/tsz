@@ -179,7 +179,7 @@ pub(super) fn collect_private_duplicate_conflicts(
     plan
 }
 
-fn is_valid_private_accessor_pair(members: &[PrivateConflictMember]) -> bool {
+const fn is_valid_private_accessor_pair(members: &[PrivateConflictMember]) -> bool {
     if members.len() != 2 || members[0].is_static != members[1].is_static {
         return false;
     }

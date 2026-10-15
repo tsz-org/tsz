@@ -1199,7 +1199,7 @@ impl Server {
 
     /// Check if a byte offset is inside a string literal, template literal, or comment.
     /// Used to suppress signature help when trigger character is typed in non-code context.
-    fn is_in_string_or_comment(source: &str, offset: usize) -> bool {
+    const fn is_in_string_or_comment(source: &str, offset: usize) -> bool {
         let bytes = source.as_bytes();
         let mut i = 0;
         while i < bytes.len() && i < offset {
@@ -1298,7 +1298,7 @@ impl Server {
     /// This mirrors TypeScript's `isSyntacticOwner` check which prevents
     /// `characterTyped` from triggering signature help for nested expressions
     /// (e.g., `(` inside an object literal argument, `,` inside array literals).
-    fn is_trigger_syntactic_owner(
+    const fn is_trigger_syntactic_owner(
         source: &str,
         trigger_char: char,
         typed_pos: usize,

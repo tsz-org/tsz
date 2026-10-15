@@ -235,7 +235,7 @@ pub(super) fn build_code_map(bytes: &[u8]) -> Vec<bool> {
 
 /// Scan forward from `start` (exclusive) to find the matching closing brace.
 /// Returns the byte offset of the matching close brace, or None.
-pub(super) fn scan_forward(
+pub(super) const fn scan_forward(
     bytes: &[u8],
     code_map: &[bool],
     start: usize,
@@ -262,7 +262,7 @@ pub(super) fn scan_forward(
 
 /// Scan backward from `start` (exclusive) to find the matching opening brace.
 /// Returns the byte offset of the matching open brace, or None.
-pub(super) fn scan_backward(
+pub(super) const fn scan_backward(
     bytes: &[u8],
     code_map: &[bool],
     start: usize,

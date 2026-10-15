@@ -385,7 +385,7 @@ impl<'a> DeclarationEmitter<'a> {
         i
     }
 
-    fn trim_type_text_ws_end(bytes: &[u8], start: usize, mut end: usize) -> usize {
+    const fn trim_type_text_ws_end(bytes: &[u8], start: usize, mut end: usize) -> usize {
         while end > start && bytes[end - 1].is_ascii_whitespace() {
             end -= 1;
         }

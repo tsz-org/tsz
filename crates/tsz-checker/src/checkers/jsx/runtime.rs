@@ -16,7 +16,7 @@ use tsz_parser::parser::NodeIndex;
 /// only recognized when followed by such a boundary; otherwise comments like
 /// `@jsxRuntimeautomatic` or `@jsxImportSourcex` would be misparsed as the
 /// real pragma with arbitrary identifier suffixes attached.
-fn is_pragma_boundary(body: &str, pos: usize) -> bool {
+const fn is_pragma_boundary(body: &str, pos: usize) -> bool {
     let bytes = body.as_bytes();
     pos >= bytes.len() || (bytes[pos] as char).is_ascii_whitespace()
 }

@@ -178,7 +178,7 @@ fn marker_end(bytes: &[u8], i: usize) -> Option<usize> {
 
 /// Given the byte offset after a block-comment opener `/*`, return the
 /// offset just past the closing `*/`, or end-of-source if unterminated.
-fn block_comment_end(bytes: &[u8], start: usize) -> usize {
+const fn block_comment_end(bytes: &[u8], start: usize) -> usize {
     let mut j = start;
     while j + 1 < bytes.len() {
         if bytes[j] == b'*' && bytes[j + 1] == b'/' {
@@ -191,7 +191,7 @@ fn block_comment_end(bytes: &[u8], start: usize) -> usize {
 
 /// Return the byte offset of the next newline at or after `i`, including
 /// the newline character itself.
-fn line_end(bytes: &[u8], i: usize) -> usize {
+const fn line_end(bytes: &[u8], i: usize) -> usize {
     let mut j = i;
     while j < bytes.len() && bytes[j] != b'\n' {
         j += 1;
@@ -202,7 +202,7 @@ fn line_end(bytes: &[u8], i: usize) -> usize {
 /// Return the byte offset just past the closing quote of a string starting
 /// at `i` (one past the opening quote). Honors `\\` escapes. If
 /// unterminated, returns end-of-source.
-fn string_end(bytes: &[u8], i: usize, quote: u8) -> usize {
+const fn string_end(bytes: &[u8], i: usize, quote: u8) -> usize {
     let mut j = i;
     while j < bytes.len() {
         let b = bytes[j];

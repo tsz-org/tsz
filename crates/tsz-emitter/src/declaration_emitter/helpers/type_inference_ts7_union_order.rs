@@ -281,7 +281,7 @@ impl DeclarationEmitter<'_> {
         !digits.is_empty() && digits.bytes().all(|byte| byte.is_ascii_digit())
     }
 
-    fn is_string_literal_text(member: &str) -> bool {
+    const fn is_string_literal_text(member: &str) -> bool {
         let bytes = member.as_bytes();
         bytes.len() >= 2
             && ((bytes[0] == b'"' && bytes[bytes.len() - 1] == b'"')

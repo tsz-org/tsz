@@ -1825,7 +1825,7 @@ impl<'a> Printer<'a> {
     /// Returns true if the source character just before `c_pos` (skipping spaces/tabs)
     /// is a newline — meaning the comment at `c_pos` starts on its own line rather than
     /// being a trailing same-line comment.
-    pub(super) fn comment_preceded_by_newline(&self, c_pos: u32) -> bool {
+    pub(super) const fn comment_preceded_by_newline(&self, c_pos: u32) -> bool {
         let Some(text) = self.source_text else {
             return false;
         };

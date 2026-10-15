@@ -216,7 +216,7 @@ impl<'a> AstToIr<'a> {
         gap.chars().all(|ch| ch.is_whitespace() || ch == ';')
     }
 
-    fn line_comment_start(line: &str) -> Option<usize> {
+    const fn line_comment_start(line: &str) -> Option<usize> {
         let bytes = line.as_bytes();
         let mut i = 0;
         let mut quote = None;

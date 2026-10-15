@@ -3,7 +3,7 @@ use crate::state::CheckerState;
 /// Find the byte offset of a top-level `=>` arrow in a JSDoc type
 /// expression, ignoring arrows nested inside `<>`, `()`, `{}`, `[]` or
 /// quoted strings.
-fn find_top_level_jsdoc_arrow(expr: &str) -> Option<usize> {
+const fn find_top_level_jsdoc_arrow(expr: &str) -> Option<usize> {
     let mut angle_depth = 0u32;
     let mut paren_depth = 0u32;
     let mut brace_depth = 0u32;
@@ -96,7 +96,7 @@ impl<'a> CheckerState<'a> {
         type_expr: &str,
         type_expr_start: u32,
     ) -> bool {
-        fn find_top_level_arrow(expr: &str) -> Option<usize> {
+        const fn find_top_level_arrow(expr: &str) -> Option<usize> {
             let mut angle_depth = 0u32;
             let mut paren_depth = 0u32;
             let mut brace_depth = 0u32;

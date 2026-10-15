@@ -81,7 +81,9 @@ pub fn read_source_file(path: &Path) -> FileReadResult {
         if bytes[0] == 0xFE && bytes[1] == 0xFF {
             // Decode UTF-16 BE
             let u16_words: Vec<u16> = bytes[2..]
-                .chunks_exact(2)
+                .as_chunks::<2>()
+                .0
+                .iter()
                 .map(|chunk| {
                     if chunk.len() == 2 {
                         u16::from_be_bytes([chunk[0], chunk[1]])
@@ -94,7 +96,9 @@ pub fn read_source_file(path: &Path) -> FileReadResult {
         } else if bytes[0] == 0xFF && bytes[1] == 0xFE {
             // Decode UTF-16 LE
             let u16_words: Vec<u16> = bytes[2..]
-                .chunks_exact(2)
+                .as_chunks::<2>()
+                .0
+                .iter()
                 .map(|chunk| {
                     if chunk.len() == 2 {
                         u16::from_le_bytes([chunk[0], chunk[1]])

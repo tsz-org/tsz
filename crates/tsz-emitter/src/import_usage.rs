@@ -801,7 +801,7 @@ fn is_reexport_from(trimmed: &str) -> bool {
 /// Check if a `:` at position `colon_pos` in a const/let/var line is a type
 /// annotation (before `=`) rather than an object literal property separator
 /// (after `=`).
-fn is_var_type_annotation_colon(line: &str, colon_pos: usize) -> bool {
+const fn is_var_type_annotation_colon(line: &str, colon_pos: usize) -> bool {
     let bytes = line.as_bytes();
     // Find the first `=` that is not `==` or `=>`
     let mut j = 0;
@@ -829,7 +829,7 @@ fn is_var_type_annotation_colon(line: &str, colon_pos: usize) -> bool {
 /// Heuristic: try to find matching `>` with balanced nesting, followed by `(`.
 /// This distinguishes `f<T>()` / `function f<T = U>()` from `a < b`
 /// (comparison).
-fn is_generic_type_args(bytes: &[u8], start: usize) -> bool {
+const fn is_generic_type_args(bytes: &[u8], start: usize) -> bool {
     let len = bytes.len();
     let mut depth = 0u32;
     let mut j = start;
@@ -860,7 +860,7 @@ fn is_generic_type_args(bytes: &[u8], start: usize) -> bool {
 }
 
 /// Skip past a balanced `<...>` block, returning the position after `>`.
-fn skip_angle_bracket_block(bytes: &[u8], start: usize) -> usize {
+const fn skip_angle_bracket_block(bytes: &[u8], start: usize) -> usize {
     let len = bytes.len();
     let mut depth = 0u32;
     let mut j = start;
@@ -886,7 +886,7 @@ fn skip_angle_bracket_block(bytes: &[u8], start: usize) -> usize {
 /// Like [`skip_type_annotation`] but also stops at a bare `=` (assignment).
 /// Used for variable declaration type annotations where `const x: T = val;`
 /// should strip only `: T`, preserving `= val`.
-fn skip_var_type_annotation(bytes: &[u8], mut i: usize) -> usize {
+const fn skip_var_type_annotation(bytes: &[u8], mut i: usize) -> usize {
     let len = bytes.len();
     let mut angle_depth = 0u32;
     let mut paren_depth = 0u32;
@@ -918,7 +918,7 @@ fn skip_var_type_annotation(bytes: &[u8], mut i: usize) -> usize {
     i
 }
 
-fn skip_type_annotation(bytes: &[u8], mut i: usize) -> usize {
+const fn skip_type_annotation(bytes: &[u8], mut i: usize) -> usize {
     let len = bytes.len();
     let mut angle_depth = 0u32;
     let mut paren_depth = 0u32;
@@ -1144,7 +1144,7 @@ fn metadata_name_appears_in_parameter_decorated_method(source: &str, ident_to_fi
     false
 }
 
-fn region_contains_decorator(bytes: &[u8], start: usize, end: usize) -> bool {
+const fn region_contains_decorator(bytes: &[u8], start: usize, end: usize) -> bool {
     let mut i = start;
     while i < end {
         if bytes[i] != b'@' {
@@ -1209,7 +1209,7 @@ fn scan_balanced_parens(bytes: &[u8], start: usize) -> Option<usize> {
 
 use tsz_common::text_scan::skip_quoted_literal as skip_quoted_bytes;
 
-fn scan_past_decorator(bytes: &[u8], start: usize) -> Option<usize> {
+const fn scan_past_decorator(bytes: &[u8], start: usize) -> Option<usize> {
     if start >= bytes.len() || bytes[start] != b'@' {
         return None;
     }

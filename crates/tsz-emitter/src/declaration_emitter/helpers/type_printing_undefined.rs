@@ -368,7 +368,7 @@ impl<'a> DeclarationEmitter<'a> {
         (depth == 0).then_some(&text[1..text.len() - 1])
     }
 
-    fn skip_ascii_whitespace(text: &str, start: usize) -> Option<usize> {
+    const fn skip_ascii_whitespace(text: &str, start: usize) -> Option<usize> {
         let bytes = text.as_bytes();
         let mut i = start;
         while i < bytes.len() && (bytes[i] as char).is_ascii_whitespace() {

@@ -283,7 +283,7 @@ mod tests {
     fn debug_and_display_match_string() {
         let t = IdentText::from("x\\y");
         let s = String::from("x\\y");
-        assert_eq!(format!("{t}"), format!("{s}"));
+        assert_eq!(format!("{t}"), s);
         assert_eq!(format!("{t:?}"), format!("{s:?}"));
     }
 

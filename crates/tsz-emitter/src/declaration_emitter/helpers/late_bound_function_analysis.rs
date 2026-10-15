@@ -1293,7 +1293,7 @@ impl<'a> DeclarationEmitter<'a> {
         ))
     }
 
-    fn top_level_function_type_arrow(type_text: &str) -> Option<usize> {
+    const fn top_level_function_type_arrow(type_text: &str) -> Option<usize> {
         let mut paren_depth = 0u32;
         let mut bracket_depth = 0u32;
         let mut brace_depth = 0u32;

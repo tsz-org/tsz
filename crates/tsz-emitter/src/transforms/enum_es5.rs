@@ -467,7 +467,7 @@ impl<'a> EnumES5Transformer<'a> {
     /// enum member, so subsequent leading-comment scans don't see the comma as
     /// a boundary. Returns the position to start scanning from for the next
     /// member's leading comments.
-    fn scan_past_member_terminator(&self, after_member: u32) -> u32 {
+    const fn scan_past_member_terminator(&self, after_member: u32) -> u32 {
         let Some(source_text) = self.source_text else {
             return after_member;
         };
