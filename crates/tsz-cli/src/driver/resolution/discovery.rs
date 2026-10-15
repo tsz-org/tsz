@@ -298,7 +298,7 @@ pub(crate) fn collect_simple_export_request(
     Some(None)
 }
 
-pub(crate) fn matching_brace(tokens: &[DiscoveryToken], open_brace: usize) -> Option<usize> {
+pub(crate) const fn matching_brace(tokens: &[DiscoveryToken], open_brace: usize) -> Option<usize> {
     let mut depth = 1usize;
     let mut i = open_brace + 1;
     while i < tokens.len() {

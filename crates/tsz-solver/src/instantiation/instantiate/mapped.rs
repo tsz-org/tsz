@@ -101,10 +101,10 @@ impl<'a> TypeInstantiator<'a> {
                     results.push(self.interner.mapped(MappedType {
                         constraint: inst(mapped.constraint),
                         template: inst(mapped.template),
-                        name_type: mapped.name_type.map(&inst),
+                        name_type: mapped.name_type.map(inst),
                         type_param: TypeParamInfo {
-                            constraint: mapped.type_param.constraint.map(&inst),
-                            default: mapped.type_param.default.map(&inst),
+                            constraint: mapped.type_param.constraint.map(inst),
+                            default: mapped.type_param.default.map(inst),
                             ..mapped.type_param
                         },
                         ..mapped

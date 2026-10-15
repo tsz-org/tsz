@@ -1165,7 +1165,7 @@ pub(crate) fn is_valid_number(s: &str) -> bool {
 /// Find the length of a valid integer at the start of a string.
 /// Handles decimal, hex (0x), octal (0o), and binary (0b) formats,
 /// matching JavaScript/TypeScript `BigInt` literal syntax.
-pub(crate) fn find_integer_length(s: &str) -> usize {
+pub(crate) const fn find_integer_length(s: &str) -> usize {
     let bytes = s.as_bytes();
     let mut i = 0;
 

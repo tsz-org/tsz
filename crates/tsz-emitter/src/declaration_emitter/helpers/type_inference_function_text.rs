@@ -410,7 +410,7 @@ impl<'a> DeclarationEmitter<'a> {
         })
     }
 
-    pub(super) fn find_top_level_arrow(text: &str) -> Option<usize> {
+    pub(super) const fn find_top_level_arrow(text: &str) -> Option<usize> {
         let bytes = text.as_bytes();
         let mut paren_depth = 0usize;
         let mut bracket_depth = 0usize;

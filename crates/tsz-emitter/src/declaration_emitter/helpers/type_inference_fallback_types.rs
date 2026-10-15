@@ -913,7 +913,7 @@ impl<'a> DeclarationEmitter<'a> {
         (!return_type.is_empty()).then(|| return_type.to_string())
     }
 
-    fn top_level_arrow_index(type_text: &str) -> Option<usize> {
+    const fn top_level_arrow_index(type_text: &str) -> Option<usize> {
         let mut paren_depth = 0u32;
         let mut bracket_depth = 0u32;
         let mut brace_depth = 0u32;

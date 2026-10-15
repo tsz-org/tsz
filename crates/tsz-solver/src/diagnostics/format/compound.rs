@@ -415,7 +415,7 @@ include!("compound/def_symbol_names.rs");
 /// contains a ` & ` separator outside any brackets, parens, or braces.
 /// Used by union-member parenthesization when the lookup-based heuristic
 /// can't see through Lazy/Application wrappers.
-fn contains_top_level_intersection_separator(s: &str) -> bool {
+const fn contains_top_level_intersection_separator(s: &str) -> bool {
     let bytes = s.as_bytes();
     let mut depth: i32 = 0;
     let mut i = 0;

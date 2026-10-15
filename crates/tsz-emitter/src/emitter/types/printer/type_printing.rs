@@ -1031,7 +1031,7 @@ impl<'a> TypePrinter<'a> {
         Some(format!("[{}]", parts.join(", ")))
     }
 
-    fn find_top_level_arrow_in_type_text(text: &str) -> Option<usize> {
+    const fn find_top_level_arrow_in_type_text(text: &str) -> Option<usize> {
         let bytes = text.as_bytes();
         let mut paren_depth = 0usize;
         let mut bracket_depth = 0usize;

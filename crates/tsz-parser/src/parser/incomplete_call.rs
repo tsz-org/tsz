@@ -57,17 +57,17 @@ const DECLARATION_KEYWORDS: [&str; 7] = [
 use tsz_common::text_scan::is_ascii_identifier_continue as is_ident_byte;
 
 #[inline]
-fn is_less_than_or_equal(bytes: &[u8], idx: usize) -> bool {
+const fn is_less_than_or_equal(bytes: &[u8], idx: usize) -> bool {
     idx + 1 < bytes.len() && bytes[idx + 1] == b'='
 }
 
 #[inline]
-fn is_spaced_less_than(bytes: &[u8], idx: usize) -> bool {
+const fn is_spaced_less_than(bytes: &[u8], idx: usize) -> bool {
     idx > 0 && bytes[idx - 1].is_ascii_whitespace()
 }
 
 #[inline]
-fn is_greater_than_or_equal(bytes: &[u8], idx: usize) -> bool {
+const fn is_greater_than_or_equal(bytes: &[u8], idx: usize) -> bool {
     idx > 0 && bytes[idx - 1] == b'='
 }
 
@@ -90,7 +90,7 @@ fn preceded_by_declaration_keyword(bytes: &[u8], probe: usize) -> bool {
 /// Always advances by at least one byte, so callers using `continue` will not
 /// spin when `/` is a division operator rather than a comment start.
 #[inline]
-fn skip_comment(bytes: &[u8], mut i: usize, end: usize) -> usize {
+const fn skip_comment(bytes: &[u8], mut i: usize, end: usize) -> usize {
     if i + 1 < end && bytes[i + 1] == b'/' {
         i += 2;
         while i < end && bytes[i] != b'\n' && bytes[i] != b'\r' {

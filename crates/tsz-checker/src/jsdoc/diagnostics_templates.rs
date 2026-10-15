@@ -658,7 +658,7 @@ impl<'a> CheckerState<'a> {
     /// the name was expected: right after the closing brace when more of the
     /// same line follows, or the first non-space glyph of the next continuation
     /// line (the leading `*`) when the constraint ends its line.
-    fn jsdoc_template_missing_name_anchor(text: &str, close_off: usize) -> usize {
+    const fn jsdoc_template_missing_name_anchor(text: &str, close_off: usize) -> usize {
         let bytes = text.as_bytes();
         let mut i = close_off + 1;
         while i < bytes.len() && matches!(bytes[i], b' ' | b'\t' | b'\r') {

@@ -1172,7 +1172,7 @@ impl<'a> Printer<'a> {
             return false;
         };
 
-        fn skip_trivia(bytes: &[u8], mut index: usize, scan_end: usize) -> usize {
+        const fn skip_trivia(bytes: &[u8], mut index: usize, scan_end: usize) -> usize {
             loop {
                 while index < scan_end && matches!(bytes[index], b' ' | b'\t' | b'\r' | b'\n') {
                     index += 1;

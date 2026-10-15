@@ -10,7 +10,7 @@ use tsz_parser::parser::node::Node;
 ///   including string literals, identifiers, and operators but not comments.
 ///
 /// Both are `None` when the range contains no non-whitespace content at depth 0.
-fn scan_depth0_token_bounds(
+const fn scan_depth0_token_bounds(
     bytes: &[u8],
     start_pos: usize,
     end_pos: usize,

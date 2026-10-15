@@ -194,7 +194,7 @@ impl<'a> SignatureHelpProvider<'a> {
 
     /// Return `true` when the cursor lies strictly after the matching closing
     /// `)` of the call delimiter at `open_rel` within `call_text`.
-    pub(super) fn cursor_after_closed_call_delimiter(
+    pub(super) const fn cursor_after_closed_call_delimiter(
         &self,
         call_start: usize,
         call_text: &str,

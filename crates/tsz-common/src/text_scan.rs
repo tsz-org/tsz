@@ -163,7 +163,7 @@ pub fn skip_quoted_literal(bytes: &[u8], start: usize, quote: u8) -> usize {
 /// agrees on what "skip whitespace" means.
 #[inline]
 #[must_use]
-pub fn skip_ascii_whitespace(bytes: &[u8], from: usize) -> usize {
+pub const fn skip_ascii_whitespace(bytes: &[u8], from: usize) -> usize {
     let mut pos = from;
     while pos < bytes.len() && matches!(bytes[pos], b' ' | b'\t' | b'\r' | b'\n') {
         pos += 1;

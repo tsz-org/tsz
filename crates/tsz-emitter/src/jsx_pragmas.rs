@@ -65,7 +65,7 @@ fn extract_jsx_factory_like_pragma(source: &str, tag: &str) -> Option<String> {
     None
 }
 
-fn is_pragma_boundary(body: &str, pos: usize) -> bool {
+const fn is_pragma_boundary(body: &str, pos: usize) -> bool {
     let bytes = body.as_bytes();
     pos >= bytes.len() || (bytes[pos] as char).is_ascii_whitespace()
 }

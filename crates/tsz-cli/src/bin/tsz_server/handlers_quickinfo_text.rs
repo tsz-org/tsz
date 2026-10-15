@@ -710,7 +710,7 @@ pub(super) fn property_name_offset_before_function(
 }
 
 /// Find the offset of an assignment LHS property name before a function position.
-pub(super) fn assignment_lhs_property_offset_before_function(
+pub(super) const fn assignment_lhs_property_offset_before_function(
     source_text: &str,
     function_pos: u32,
 ) -> Option<u32> {

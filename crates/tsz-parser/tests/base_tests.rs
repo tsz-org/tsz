@@ -85,11 +85,17 @@ fn node_index_into_option_max_minus_one_returns_some() {
 // NodeIndex equality, copy, hashing
 // =====================================================================
 
+/// Calls `Clone::clone` through a generic bound so the `Clone` impl itself is
+/// exercised (a direct call on a `Copy` type is rewritten to a copy by clippy).
+fn clone_via_trait<T: Clone>(value: &T) -> T {
+    value.clone()
+}
+
 #[test]
 fn node_index_is_copy_and_clone() {
     let a = NodeIndex(42);
     let b = a; // copy
-    let c = Clone::clone(&a); // explicit clone
+    let c = clone_via_trait(&a); // explicit clone
     assert_eq!(a, b);
     assert_eq!(a, c);
 }
@@ -287,7 +293,7 @@ fn text_range_new_pos_can_equal_end() {
 fn text_range_is_copy_and_clone() {
     let a = TextRange::new(1, 4);
     let b = a; // copy
-    let c = Clone::clone(&a); // explicit clone
+    let c = clone_via_trait(&a); // explicit clone
     assert_eq!(a.pos, b.pos);
     assert_eq!(a.end, b.end);
     assert_eq!(a.pos, c.pos);

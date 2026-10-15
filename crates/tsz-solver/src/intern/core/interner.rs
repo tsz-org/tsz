@@ -826,7 +826,7 @@ impl TypeInterner {
     }
 
     fn decrement_union_normalize_cache_member_slots(&self, slots: usize) {
-        let _ = self.union_normalize_cache_member_slots.fetch_update(
+        let _ = self.union_normalize_cache_member_slots.try_update(
             Ordering::Relaxed,
             Ordering::Relaxed,
             |current| Some(current.saturating_sub(slots)),
