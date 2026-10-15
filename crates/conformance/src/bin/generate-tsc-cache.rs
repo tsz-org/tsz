@@ -63,6 +63,23 @@ struct Args {
     /// Optional substring filter for test file paths
     #[arg(long)]
     filter: Option<String>,
+
+    /// Compiler to run instead of the resolved `typescript` package (a native
+    /// binary or a `.js` entry point). Lets the harness measure any
+    /// tsc-compatible compiler against the corpus.
+    #[arg(long)]
+    tsc_path: Option<String>,
+
+    /// Version recorded in cache metadata when `--tsc-path` is set; also decides
+    /// whether the TS7 determinism flags are passed.
+    #[arg(long)]
+    tsc_version: Option<String>,
+
+    /// Write the cache even when some tests fail to run, recording each
+    /// failure (crash, timeout, no diagnostics on a failing exit) in
+    /// `<output>.errors.json` instead of aborting.
+    #[arg(long)]
+    keep_going: bool,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -259,8 +276,14 @@ fn main() -> Result<()> {
         .build_global()
         .ok();
 
-    let tsc_path = resolve_tsc_path()?;
-    let tsc_version = resolve_tsc_version().unwrap_or_else(|_| "unknown".to_string());
+    let tsc_path = match args.tsc_path.clone() {
+        Some(path) => path,
+        None => resolve_tsc_path()?,
+    };
+    let tsc_version = match args.tsc_version.clone() {
+        Some(version) => version,
+        None => resolve_tsc_version().unwrap_or_else(|_| "unknown".to_string()),
+    };
     println!("📍 Using tsc: {}", tsc_path);
     println!("📍 TypeScript version: {tsc_version}");
 
@@ -281,6 +304,7 @@ fn main() -> Result<()> {
     let explicitly_skipped: Mutex<BTreeMap<String, String>> = Mutex::new(BTreeMap::new());
     let processed = AtomicUsize::new(0);
     let errors = AtomicUsize::new(0);
+    let failures: Mutex<BTreeMap<String, String>> = Mutex::new(BTreeMap::new());
     let skipped = AtomicUsize::new(0);
     let total = test_files.len();
     let tsc_path_ref = &tsc_path;
@@ -347,6 +371,9 @@ fn main() -> Result<()> {
             Err(e) => {
                 eprintln!("✗ Error processing {}: {e:#}", path.display());
                 errors.fetch_add(1, Ordering::SeqCst);
+                if let Some(key) = tsz_conformance::cache::cache_key(path, &test_dir_path) {
+                    failures.lock().unwrap().insert(key, format!("{e:#}"));
+                }
             }
         }
 
@@ -380,7 +407,12 @@ fn main() -> Result<()> {
     println!("  Skipped: {}", skipped.load(Ordering::SeqCst));
     println!("  Errors: {error_count}");
 
-    if error_count != 0 {
+    if args.keep_going {
+        let failures = failures.into_inner().unwrap();
+        let failures_path = format!("{}.errors.json", args.output);
+        serde_json::to_writer_pretty(std::fs::File::create(&failures_path)?, &failures)?;
+        println!("✓ {} failures written to {failures_path}", failures.len());
+    } else if error_count != 0 {
         anyhow::bail!("refusing to write a partial tsc cache after {error_count} errors");
     }
 
